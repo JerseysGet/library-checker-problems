@@ -28,6 +28,8 @@ SUBSTITUTE_PY="$SCRIPT_DIR/substitute.py"
 PROBLEMS=()
 PROBLEMS+=( "datastructure/unionfind" )
 PROBLEMS+=( "datastructure/staticrmq" )
+PROBLEMS+=( "datastructure/point_add_range_sum" )
+PROBLEMS+=( "datastructure/range_affine_range_sum" )
 
 for problem in ${PROBLEMS[@]}; do
     passed=1
