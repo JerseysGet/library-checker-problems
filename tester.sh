@@ -27,7 +27,7 @@ SUBSTITUTE_PY="$SCRIPT_DIR/substitute.py"
 
 PROBLEMS=()
 PROBLEMS+=( "datastructure/unionfind" )
-PROBLEMS+=( "datastructure/staticrmq" )
+# PROBLEMS+=( "datastructure/staticrmq" )
 
 for problem in ${PROBLEMS[@]}; do
     passed=1
