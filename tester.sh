@@ -44,15 +44,22 @@ for problem in ${PROBLEMS[@]}; do
     $GENERATE_PY "$info_toml"
     $SUBSTITUTE_PY -i "$my_dir/driver.cpp" -o "$my_dir/__tester.cpp" 2> /dev/null
     $CXX "${CXX_FLAGS[@]}" "$my_dir/__tester.cpp" -o "$my_dir/__tester.out"
+    run_time=0
     for test_case in $dir/in/*; do
         base="$(basename $test_case .in)"
         printf "%s: " "$base"
         # Source: https://stackoverflow.com/a/22051517
+        ts=$(date +%s%N)
         if ! ( $my_dir/__tester.out < "$dir/in/$base.in" > "$my_dir/test/$base.test" || false ) >/dev/null 2>&1; then
             passed=0
             printf "${YELLOW}RTE${NC}\n"        
             continue
         fi
+        tt=$((($(date +%s%N) - $ts)/1000000))
+        if [ $tt -gt $run_time ]; then
+            run_time=$tt
+        fi
+        printf "${WHITE_BOLD}${tt}ms, ${NC}"
         $checker "$dir/in/$base.in" "$my_dir/test/$base.test" "$dir/out/$base.out" 
         if [ $? -ne 0 ]; then
             passed=0
@@ -60,11 +67,12 @@ for problem in ${PROBLEMS[@]}; do
     done
     printf "${WHITE_BOLD}${problem} ${NC}"
     if [ $passed -eq 1 ]; then
-        printf "${GREEN_BOLD}PASSED${NC}\n"
+        printf "${GREEN_BOLD}PASSED${NC} "
     else
-        printf "${RED_BOLD}FAILED${NC}\n"
+        printf "${RED_BOLD}FAILED${NC} "
     fi
-    printf "\n"
+    printf "in ${WHITE_BOLD}${run_time}ms${NC}"
+    printf "\n\n"
     rm "$my_dir/__tester.cpp"
     rm "$my_dir/__tester.out"
 done
