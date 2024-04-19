@@ -31,6 +31,7 @@ PROBLEMS+=( "datastructure/staticrmq" )
 PROBLEMS+=( "datastructure/point_add_range_sum" )
 PROBLEMS+=( "datastructure/range_affine_range_sum" )
 PROBLEMS+=( "datastructure/line_add_get_min" )
+PROBLEMS+=( "datastructure/range_kth_smallest" )
 
 for problem in ${PROBLEMS[@]}; do
     passed=1
