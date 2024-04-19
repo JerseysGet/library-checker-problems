@@ -34,6 +34,7 @@ PROBLEMS+=( "datastructure/line_add_get_min" )
 PROBLEMS+=( "datastructure/range_kth_smallest" )
 PROBLEMS+=( "math/primality_test" )
 PROBLEMS+=( "graph/scc" )
+PROBLEMS+=( "string/enumerate_palindromes" )
 
 for problem in ${PROBLEMS[@]}; do
     passed=1
