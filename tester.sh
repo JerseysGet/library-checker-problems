@@ -41,6 +41,7 @@ else
     PROBLEMS=( "$@" )
 fi
 
+FAILED_LIST=()
 for problem in ${PROBLEMS[@]}; do
     passed=1
     printf "${WHITE_BOLD}${SEP}[ ${problem} ]${SEP}${NC}\n"
@@ -60,7 +61,7 @@ for problem in ${PROBLEMS[@]}; do
         ts=$(date +%s%N)
         if ! ( $my_dir/__tester.out < "$dir/in/$base.in" > "$my_dir/test/$base.test" || false ) >/dev/null 2>&1; then
             passed=0
-            printf "${YELLOW}RTE${NC}\n"        
+            printf "${YELLOW_BOLD}RTE${NC}\n"        
             continue
         fi
         tt=$((($(date +%s%N) - $ts)/1000000))
@@ -78,9 +79,19 @@ for problem in ${PROBLEMS[@]}; do
         printf "${GREEN_BOLD}PASSED${NC} "
     else
         printf "${RED_BOLD}FAILED${NC} "
+        FAILED_LIST+=( "$problem" )
     fi
     printf "in ${WHITE_BOLD}${run_time}ms${NC}"
     printf "\n\n"
     rm "$my_dir/__tester.cpp"
     rm "$my_dir/__tester.out"
 done
+
+if [ ${#FAILED_LIST[@]} -eq 0 ]; then
+    printf "${GREEN_BOLD}All Passed${NC}\n"
+else
+    printf "${WHITE_BOLD}${#FAILED_LIST[@]} failed.${NC}\n"
+    for problem in ${FAILED_LIST[@]}; do
+        printf "${WHITE_BOLD}${problem}${NC} ${RED_BOLD}failed${NC}\n"
+    done
+fi
