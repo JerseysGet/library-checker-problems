@@ -61,9 +61,7 @@ void solve(__attribute__((unused)) int tt) {
         cin >> brr[i];
     }
 
-    auto c = ntt.multiply(arr, arr);
-    c = ntt.multiply(arr, brr);
-    
+    auto c = ntt.multiply(arr, brr);
     for (int i = 0; i < sz(c); i++) {
         cout << c[i] << " ";
     }
