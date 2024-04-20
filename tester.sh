@@ -25,17 +25,21 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 GENERATE_PY="$SCRIPT_DIR/generate.py"
 SUBSTITUTE_PY="$SCRIPT_DIR/substitute.py"
 
-PROBLEMS=()
-PROBLEMS+=( "datastructure/unionfind" )
-PROBLEMS+=( "datastructure/staticrmq" )
-PROBLEMS+=( "datastructure/point_add_range_sum" )
-PROBLEMS+=( "datastructure/range_affine_range_sum" )
-PROBLEMS+=( "datastructure/line_add_get_min" )
-PROBLEMS+=( "datastructure/range_kth_smallest" )
-PROBLEMS+=( "math/primality_test" )
-PROBLEMS+=( "graph/scc" )
-PROBLEMS+=( "string/enumerate_palindromes" )
-PROBLEMS+=( "math/convolution_mod" )
+if [ $# -eq 0 ]; then
+    PROBLEMS=()
+    PROBLEMS+=( "datastructure/unionfind" )
+    PROBLEMS+=( "datastructure/staticrmq" )
+    PROBLEMS+=( "datastructure/point_add_range_sum" )
+    PROBLEMS+=( "datastructure/range_affine_range_sum" )
+    PROBLEMS+=( "datastructure/line_add_get_min" )
+    PROBLEMS+=( "datastructure/range_kth_smallest" )
+    PROBLEMS+=( "math/primality_test" )
+    PROBLEMS+=( "graph/scc" )
+    PROBLEMS+=( "string/enumerate_palindromes" )
+    PROBLEMS+=( "math/convolution_mod" )
+else
+    PROBLEMS=( "$@" )
+fi
 
 for problem in ${PROBLEMS[@]}; do
     passed=1
