@@ -38,6 +38,7 @@ if [ $# -eq 0 ]; then
     PROBLEMS+=( "string/enumerate_palindromes" )
     PROBLEMS+=( "math/convolution_mod" )
     PROBLEMS+=( "graph/lca" )
+    PROBLEMS+=( "graph/jump_on_tree" )
 else
     PROBLEMS=( "$@" )
 fi
