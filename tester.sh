@@ -39,6 +39,7 @@ if [ $# -eq 0 ]; then
     PROBLEMS+=( "math/convolution_mod" )
     PROBLEMS+=( "graph/lca" )
     PROBLEMS+=( "graph/jump_on_tree" )
+    PROBLEMS+=( "math/two_sat" )
 else
     PROBLEMS=( "$@" )
 fi
