@@ -24,9 +24,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 GENERATE_PY="$SCRIPT_DIR/generate.py"
 SUBSTITUTE_PY="$SCRIPT_DIR/substitute.py"
-
-if [ $# -eq 0 ]; then
-    PROBLEMS=()
+CLEAN=0
+PROBLEMS=()
+if [[ $# -eq 0 || ($# -eq 1 && ("$1" = "-c" || "$1" = "--clean")) ]]; then
     PROBLEMS+=( "datastructure/unionfind" )
     PROBLEMS+=( "datastructure/staticrmq" )
     PROBLEMS+=( "datastructure/point_add_range_sum" )
@@ -40,8 +40,33 @@ if [ $# -eq 0 ]; then
     PROBLEMS+=( "graph/lca" )
     PROBLEMS+=( "graph/jump_on_tree" )
     PROBLEMS+=( "math/two_sat" )
+    if [[ $# -eq 1 && ("$1" = "-c" || "$1" = "--clean") ]]; then
+        CLEAN=1
+    fi
 else
-    PROBLEMS=( "$@" )
+    # Source: https://www.baeldung.com/linux/bash-parse-command-line-arguments
+    VALID_ARGS=$(getopt -o c --long clean -- "$@")
+    if [[ $? -ne 0 ]]; then
+        exit 1;
+    fi
+    echo $VALID_ARGS
+    eval set -- "$VALID_ARGS"
+    while [ : ]; do
+        case "$1" in
+            -c | --clean)
+                echo "Processing clean"
+                CLEAN=1
+                shift;
+                ;;
+            --)
+                shift;
+                echo "Processing default '$1'"
+                echo $#
+                PROBLEMS=( "$@" ) 
+                break
+                ;;
+        esac
+    done
 fi
 
 FAILED_LIST=()
@@ -53,6 +78,11 @@ for problem in ${PROBLEMS[@]}; do
     mkdir -p "$my_dir/test"
     checker="$dir/checker"
     info_toml="$dir/info.toml"
+    if [ $CLEAN -eq 1 ]; then
+        $GENERATE_PY --clean "$info_toml"
+        printf "\n\n"
+        continue
+    fi
     $GENERATE_PY "$info_toml"
     $SUBSTITUTE_PY -i "$my_dir/driver.cpp" -o "$my_dir/__tester.cpp" 2> /dev/null
     $CXX "${CXX_FLAGS[@]}" "$my_dir/__tester.cpp" -o "$my_dir/__tester.out"
@@ -89,6 +119,10 @@ for problem in ${PROBLEMS[@]}; do
     rm "$my_dir/__tester.cpp"
     rm "$my_dir/__tester.out"
 done
+
+if [ $CLEAN -eq 1 ]; then
+    exit
+fi
 
 if [ ${#FAILED_LIST[@]} -eq 0 ]; then
     printf "${GREEN_BOLD}All Passed${NC}\n"
