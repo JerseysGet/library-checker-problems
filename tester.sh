@@ -40,6 +40,7 @@ if [[ $# -eq 0 || ($# -eq 1 && ("$1" = "-c" || "$1" = "--clean")) ]]; then
     PROBLEMS+=( "graph/lca" )
     PROBLEMS+=( "graph/jump_on_tree" )
     PROBLEMS+=( "math/two_sat" )
+    PROBLEMS+=( "geo/static_convex_hull" )
     if [[ $# -eq 1 && ("$1" = "-c" || "$1" = "--clean") ]]; then
         CLEAN=1
     fi
