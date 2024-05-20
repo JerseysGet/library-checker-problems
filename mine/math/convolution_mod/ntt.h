@@ -48,10 +48,10 @@ struct NTT {
     }
     i32 in[2][MAXN];
     vector<int> multiply(const vector<int> &a, const vector<int> &b) {
-        fill(in[0], in[0] + MAXN, 0), fill(in[1], in[1] + MAXN, 0);
         if (a.empty() || b.empty())
             return {};
         int size = sz(a) + sz(b) - 1, n = 1 << lg2(size);
+        fill(in[0], in[0] + n, 0), fill(in[1], in[1] + n, 0);
         copy(all(a), in[0]), copy(all(b), in[1]);
         ntt(in[0], n), ntt(in[1], n);
         int invN = binExp(n, MOD - 2);
