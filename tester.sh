@@ -50,19 +50,15 @@ else
     if [[ $? -ne 0 ]]; then
         exit 1;
     fi
-    echo $VALID_ARGS
     eval set -- "$VALID_ARGS"
     while [ : ]; do
         case "$1" in
             -c | --clean)
-                echo "Processing clean"
                 CLEAN=1
                 shift;
                 ;;
             --)
                 shift;
-                echo "Processing default '$1'"
-                echo $#
                 PROBLEMS=( "$@" ) 
                 break
                 ;;

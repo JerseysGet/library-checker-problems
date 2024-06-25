@@ -52,17 +52,11 @@ void solve(__attribute__((unused)) int tt) {
         adjLists[u].push_back(v);
     }
     SCC scc(adjLists);
-    scc.sccEnumeration();
-
-    vvi sccs(scc.sccCount);
-    for (int i = 0; i < n; i++) {
-        sccs[scc[i]].push_back(i);
-    }
-
-    cout << scc.sccCount << "\n";
-    for (auto s : sccs) {
-        cout << sz(s) << " ";
-        for (auto k : s) cout << k << " ";
+    reverse(all(scc.comps));
+    cout << sz(scc.comps) << "\n";
+    for (auto cc : scc.comps) {
+        cout << sz(cc) << " ";
+        for (auto x : cc) cout << x << " ";
         cout << "\n";
     }
 }
