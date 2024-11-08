@@ -3,6 +3,9 @@ Pass maxn as LARGER than actual max size
 Ensure all array inputs are in [0, MOD)
 Create global instance of struct NTT
 */
+
+#include "../mint.h"
+
 using i32 = int32_t;
 using i64 = int64_t;
 template <i32 maxn>
@@ -47,7 +50,8 @@ struct NTT {
                 }
     }
     i32 in[2][MAXN];
-    vector<int> multiply(const vector<int> &a, const vector<int> &b) {
+    template<typename T>
+    vector<T> multiply(const vector<T> &a, const vector<T> &b) {
         if (a.empty() || b.empty())
             return {};
         int size = sz(a) + sz(b) - 1, n = 1 << lg2(size);
@@ -59,6 +63,6 @@ struct NTT {
             in[0][i] = mul(mul(in[0][i], in[1][i]), invN);
         reverse(in[0] + 1, in[0] + n);
         ntt(in[0], n);
-        return vector<int>(in[0], in[0] + size);
+        return vector<T>(in[0], in[0] + size);
     }
 };

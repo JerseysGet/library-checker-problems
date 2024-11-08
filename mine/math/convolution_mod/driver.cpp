@@ -51,14 +51,14 @@ NTT<MAXN> ntt;
 void solve(__attribute__((unused)) int tt) {
     int n, m;
     cin >> n >> m;
-    vi arr(n);
+    vm arr(n);
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        cin >> arr[i].val;
     }
 
-    vi brr(m);
+    vm brr(m);
     for (int i = 0; i < m; i++) {
-        cin >> brr[i];
+        cin >> brr[i].val;
     }
 
     auto c = ntt.multiply(arr, brr);
