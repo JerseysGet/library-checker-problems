@@ -29,6 +29,7 @@ struct mint {
             if (b & 1) res *= a;
         return res;
     }
+    operator int() const { return val; }
     friend mint operator+(const mint &a, const mint &b) { return mint(a) += b; }
     friend mint operator-(const mint &a, const mint &b) { return mint(a) -= b; }
     friend mint operator*(const mint &a, const mint &b) { return mint(a) *= b; }
@@ -37,7 +38,9 @@ struct mint {
     friend bool operator!=(const mint &a, const mint &b) { return a.val != b.val; }
     friend bool operator<(const mint &a, const mint &b) { return a.val < b.val; }
     friend ostream &operator<<(ostream &os, const mint &a) { return os << a.val; }
+    friend string to_string(const mint& a) { return to_string(a.val); } 
     i32 val;
 };
-using Mint = mint<998244353>;
-using i32 = int32_t;
+using Mint = mint<M>;
+typedef vector<Mint> vm;
+typedef vector<vm> vvm;
